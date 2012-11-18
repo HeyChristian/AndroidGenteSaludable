@@ -18,10 +18,10 @@ function ApplicationWindow(title) {
 		self=CreateHome();
 	}else if(title==='Blog'){
 		
-		var exam = require('ui/handheld/exam');
+		var Categories = require('ui/handheld/Categories');
 		
 		
-		self= exam(title);  //other;//CreateBlog();
+		self= Categories(title);  //other;//CreateBlog();
 			
 	}else{
 		  self= other; //CreateContactus();

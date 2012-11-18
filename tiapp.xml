@@ -15,12 +15,12 @@
     </deployment-targets>
     <sdk-version>2.1.2.GA</sdk-version>
     <id>org.qipro.android</id>
-    <name>QiproBlogAndroid</name>
-    <version>1.0</version>
-    <publisher>pollo</publisher>
-    <url>http://</url>
+    <name>Gente Saludable</name>
+    <version>1.0.0</version>
+    <publisher>Christian Vázquez</publisher>
+    <url>http://coalicionlazo.qipro.org</url>
     <description>not specified</description>
-    <copyright>2012 by pollo</copyright>
+    <copyright>2012 by Christian Vázquez</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>

@@ -200,7 +200,7 @@ var content = Ti.UI.createView({
 		left:20,
 		right:20,
 		layout:'vertical',
-		//height:'auto',
+		height:'auto',
 		backgroundColor:'white',
 		borderRadius:10,
 		//visible:false
