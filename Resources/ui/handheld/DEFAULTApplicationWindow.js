@@ -15,14 +15,14 @@ function ApplicationWindow(title) {
 
 	if(title==='Info'){
 	
-		self=CreateHome();
+			var Categories = require('ui/handheld/Categories');
+		
+		
+		self= Categories(title);
 	}else if(title==='Blog'){
 		
-		var Categories = require('ui/handheld/Categories');
-		
-		
-		self= Categories(title);  //other;//CreateBlog();
-			
+	  //other;//CreateBlog();
+			self= other;
 	}else{
 		  self= other; //CreateContactus();
 			

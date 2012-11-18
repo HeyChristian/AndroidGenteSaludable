@@ -108,6 +108,10 @@ function GetFrontItem(win,title,subtitle,image,destination){
 		height : 130,
 		width : '100%',
 		left:0,
+		destination:destination,
+		title:title,
+		subtitle:subtitle,
+		image:image
 
 	});
 
@@ -180,13 +184,13 @@ function GetFrontItem(win,title,subtitle,image,destination){
 
 
 
-	iView.addEventListener('click', function() {
+	iView.addEventListener('click', function(e) {
 	
 
 		
 		//indicatorView.show();
 		
-		win.containingTab.open(GetCategories(win,title,destination),{annimated:true});
+		win.containingTab.open(GetCategories(win,e.source.title,e.source.destination),{annimated:true});
 			
 
 	});
@@ -224,15 +228,15 @@ function GetCategories(rootwin,title,destination){
 		
 	});
 	
-	/*var isFirstLoad=true;
-
+	
+	var isFirstLoad=true;
 	
 	cat.addEventListener('focus',function(){
 		if(isFirstLoad){
 			indicatorView.show();
 			isFirstLoad=false;
 		}
-	});*/
+	});
 	
 	var bg = Ti.UI.createView({
 		backgroundColor:backgroundColor,
@@ -360,7 +364,11 @@ function jsonCategoriesRows(rootwin,controlname){
 								  
 								  
 								  v1.addEventListener('click',function(e){
-								  		GetSubChild(cattype,cattitle,artcontent,rootwin);
+								  	
+								  		//alert(e.source.ctitle);
+								  	
+								  	
+								  		GetSubChild(e.source.ctype,e.source.ctitle,e.source.ccontent,rootwin);
 								  });
 									
 								  content.add(v1);
@@ -412,7 +420,7 @@ function jsonCategoriesRows(rootwin,controlname){
 }
 
 
-function GetSubChild(rowtype,title,titlecontent,textcontent,rootwin){
+function GetSubChild(rowtype,title,textcontent,rootwin){
 	
 	
 	
@@ -448,6 +456,16 @@ function GetSubChild(rowtype,title,titlecontent,textcontent,rootwin){
 					backgroundColor:Ti.App.Properties.getString('NavigatorBarColor')
 					
 			});
+			
+			var viewLeft = Ti.UI.createView({
+				
+				backgroundColor:'white',
+				left:2,
+				top:3,
+				height:70,
+				//width: 64,
+				
+			});
 				
 			var titleText = Ti.UI.createLabel({
 					text:title,
@@ -461,17 +479,28 @@ function GetSubChild(rowtype,title,titlecontent,textcontent,rootwin){
 				
 			titleBar.add(titleText);
 				
-			
+			var btnBack = Ti.UI.createImageView({
+				image:'/images/backbutton.png',
+				left:0,
+				//height:64,
+				//width:64
+			});
+			btnBack.addEventListener('click',function(){
+				rootwin.fireEvent('android:back');
+			});
+			viewLeft.add(btnBack);
+			//titleBar.add(viewLeft);
 				
 	
 			var childContent = Ti.UI.createView({
 								
-				top:30,
-				left:20,
-				right:20,
+				top:0,
+				left:7,
+				right:7,
 				layout:'vertical',
-				backgroundColor:'white',
+				backgroundColor:'transparent',
 				borderRadius:10,
+				zindex:99,
 				visible:false
 								
 								
@@ -490,7 +519,7 @@ function GetSubChild(rowtype,title,titlecontent,textcontent,rootwin){
 						    	
 						    
 				var cscroll = Ti.UI.createScrollView({
-						  top:38,
+						  top:5,
 						  contentHeight:'auto',
 						  contentWidth:300, 
 						  showVerticalScrollIndicator:true, 
@@ -509,23 +538,26 @@ function GetSubChild(rowtype,title,titlecontent,textcontent,rootwin){
 						    }
 				});
 						    	
-				var clabel = Ti.UI.createLabel({
-							 top:35,
+				var clabel = Ti.UI.createTextArea({
+							 top:5,
 							 left:3,
 							 color:'black',
 							 height:'auto',
 							 textAlign:'left',
-							 text:L(textcontent),
+							 value:textcontent,
 							 font:{
-							    	fontSize:15
-							 }
+							   	fontSize:24
+							 }, 
+							editable:false,
+							borderWidth:0,
+							borderRadius:10,
 				});
 							    
 				
-				childContent.add(cheader);
+				//childContent.add(cheader);
 				childContent.add(clabel);
-				scroll.add(childContent);
-				win.add(cscroll);
+				//cscroll.add(childContent);
+				win.add(childContent);
 				
 				childContent.visible=true;
 				

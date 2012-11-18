@@ -21,7 +21,7 @@
     <url>http://coalicionlazo.qipro.org</url>
     <description>not specified</description>
     <copyright>2012 by Christian Vázquez</copyright>
-    <icon>appicon.png</icon>
+    <icon>iPhoneIcon_Big.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
     <statusbar-style>default</statusbar-style>
