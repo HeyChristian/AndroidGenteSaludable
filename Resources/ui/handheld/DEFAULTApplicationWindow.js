@@ -5,6 +5,7 @@ var indicatorView = Titanium.UI.createActivityIndicator({
 		message:'Loading...'
 });
 var backgroundApplication = Ti.App.Properties.getString('appbg');
+var backgroundColor = Ti.App.Properties.getString('appbgcolor');
 	
 function ApplicationWindow(title) {
 	var other = Ti.UI.createWindow({
@@ -69,8 +70,9 @@ function CreateHome(){
 		top:200,
 		zIndex:999,
 		height:1000, 
-		backgroundImage : Ti.App.Properties.getString('appbg'),
-		backgroundRepeat : true,
+		backgroundColor:backgroundColor,
+		//backgroundImage : Ti.App.Properties.getString('appbg'),
+		//backgroundRepeat : true,
 		
 	});
 	/*
@@ -258,8 +260,9 @@ function GetFrontRow(win,title,subtitle,image,destination){
 			//navBarHidden:false,
 			barColor: Ti.App.Properties.getString('NavigatorBarColor'),//'black',
 			title:title,
-			backgroundImage : backgroundApplication,//'/images/ios-linen.jpg',
-			backgroundRepeat : true,
+			backgroundColor:backgroundColor,
+			//backgroundImage : backgroundApplication,//'/images/ios-linen.jpg',
+			//backgroundRepeat : true,
 		
 		 });
 	

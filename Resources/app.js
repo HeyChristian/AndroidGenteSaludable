@@ -28,6 +28,8 @@ if (Ti.version < 1.8 ) {
 	
 	
 	Ti.UI.setBackgroundImage( '/images/cloudPatterns.jpg' );
+	
+		Ti.App.Properties.setString('appbgcolor','#13B5EA');
 	Ti.App.Properties.setString('appbg','/images/cloudPatterns.jpg');
 	Ti.App.Properties.setString('HeaderTitlesColor','black');
 	Ti.App.Properties.setString('subHeaderTitlesColor','black');

@@ -5,15 +5,16 @@ var indicatorView = Titanium.UI.createActivityIndicator({
 		message:'Loading...'
 });
 var backgroundApplication = Ti.App.Properties.getString('appbg');
-	
+var backgroundColor = Ti.App.Properties.getString('appbgcolor');
 
 function exam(title){
 	
 	
 	var self = Ti.UI.createWindow({
 		
-		backgroundImage:backgroundApplication,
-		backgroundRepeat:true,
+		//backgroundImage:backgroundApplication,
+		//backgroundRepeat:true,
+		backgroundColor:backgroundColor,
 		tabBarHidden:false, 
 		navBarHidden:true
 	
@@ -51,8 +52,9 @@ function masterView(win){
 		top:200,
 		zIndex:999,
 		height:1000, 
-		backgroundImage : Ti.App.Properties.getString('appbg'),
-		backgroundRepeat : true,
+		backgroundColor:backgroundColor,
+		//backgroundImage : Ti.App.Properties.getString('appbg'),
+		//backgroundRepeat : true,
 		
 	});
 	
@@ -198,11 +200,10 @@ var content = Ti.UI.createView({
 		left:20,
 		right:20,
 		layout:'vertical',
-		//height:'25%',
-		//height:300,//300,
+		//height:'auto',
 		backgroundColor:'white',
 		borderRadius:10,
-		visible:false
+		//visible:false
 		
 });
 
@@ -219,8 +220,9 @@ function GetCategories(title,destination){
 	});
 	
 	var bg = Ti.UI.createView({
-		backgroundImage:backgroundApplication,
-		backgroundRepeat:true,
+		backgroundColor:backgroundColor,
+		//backgroundImage:backgroundApplication,
+		//backgroundRepeat:true,
 		width:'100%',
 		height:'100%'
 	});
@@ -252,8 +254,7 @@ function GetCategories(title,destination){
 	var lbl =  Ti.UI.createLabel({
 		text:'NUEVA PANTALLA  DE ' + title
 	});
-	//content.add(lbl);
-	//content.add(getCategoryArticles(destination));
+
 	
 	MakeContent(destination)
 	
@@ -280,8 +281,10 @@ function MakeContent(destination){
 	
 	
 	indicatorView.show();
-	content.add(tv);
+	//content.add(tv);
+	//alert('ANTES DE LLAMAR API');
 	jsonCategoriesRows(destination);
+	alert('LINEA LUEGO DE LLAMAR API');
 	
 }
 
@@ -303,70 +306,20 @@ function jsonCategoriesRows(controlname){
 	indicatorView.show();
 	var jresult = [];
 	var size_data;
-	Titanium.App.Properties.setString(controlname,null); 
+	//Titanium.App.Properties.setString(controlname,null); 
 	content.visible=false;
 	
-	if(Titanium.App.Properties.getString(controlname) != null){
-		  			
-		  		var json=JSON.parse(Titanium.App.Properties.getString(controlname));
-		  	
-		  	
-		  				size_data = json.length;
-						
-						for(var i = 0; i < size_data; i++) {
-			
-									var havechild=false;
-									var li = null;
-									if(json[i].art_type=='LST' || json[i].art_type=='TXT'){
-										havechild=true;
-										li = '/images/File_font.png';
-									}
-									
-									
-									
-									
-									jresult.push({
-										id  :json[i].cat_id,
-										title:json[i].cat_name,
-										type:json[i].art_type,
-										content:json[i].art_content,
-										artid:json[i].art_id,
-										hasChild:havechild,
-										color:'black',
-									    height:100,
-										leftImage:li,
-										
-										backgroundColor:'white',
-										font:{
-					    					fontSize:'20dp',
-					    					fontWeight:'bold'
-					    					
-					    				}
-									});
-			
-						}
-		  					
-		  		tv.data = jresult;
-		  		tv.backgroundColor = 'white';
-		  		
-		  		content.height =   (jresult.length * 55);
-		  		content.visible=true;
-		  		//var nh =  jresult.length * 100;
-		  		//alert(nh);
-		  		//tv.height =  nh;
-		  		
-		  		indicatorView.hide();
-		  			//child.add(GetSubChild(jresult,rootwin));
-		  			//return jresult;
-	}else{
-		
+
 		var loader = Ti.Network.createHTTPClient({
-				
+		
+		
+
+			
 			onload:function(e) {
 						
-						
+						alert('LEYENDO RESULT API');
 						var request = loader.responseText;
-		
+						//alert(request);
 						try{
 						
 							var json =    JSON.parse(request);  
@@ -374,6 +327,15 @@ function jsonCategoriesRows(controlname){
 							
 							for(var i = 0; i < size_data; i++) {
 			
+			
+			
+			
+			try{
+				
+				
+									//TI.API.debug(json[i].cat_name);
+									
+									
 									var havechild=false;
 										var li = null;
 									if(json[i].art_type=='LST' || json[i].art_type=='TXT'){
@@ -384,47 +346,53 @@ function jsonCategoriesRows(controlname){
 									
 									
 									
-									jresult.push({
-										id  :json[i].cat_id,
-										title:json[i].cat_name,
-										type:json[i].art_type,
-										content:json[i].art_content,
-										artid:json[i].art_id,
-										hasChild:havechild,
-										color:'black',
+									var v1 = Ti.UI.createView({
+										height:75,
+										cid  :json[i].cat_id,
+										ctype:json[i].art_type,
+										ccontent:json[i].art_content,
+										cartid:json[i].art_id,
+										//hasChild:havechild,
 										backgroundColor:'white',
-										leftImage:li,
-										Height:100,
-										font:{
-					    					fontSize:'20dp',
-					    					fontWeight:'bold'
-					    					
-					    				}
-									
 									});
+									var lbl = Ti.UI.createLabel({
+									 	
+										text:json[i].cat_name
+									});
+									
+							
+									
+									v1.add(lbl);
+									content.add(v1);
+								}catch(e00){
+									alert("Error on: " + e00);
+								}
+									
+									
+									//jresult.push(row);
 			
 							}
 						
-							Titanium.App.Properties.setString(controlname,JSON.stringify(json));
+							//Titanium.App.Properties.setString(controlname,JSON.stringify(json));
 							
 							 
 						//	alert(jresult.length);
 							//child.add(GetSubChild(jresult,rootwin));
 							//return jresult;	
 					
-							tv.data = jresult;
-		  					tv.backgroundColor = 'white';
+						//	tv.data = jresult;
+		  				//	tv.backgroundColor = 'white';
 		  					//var nh =  jresult.length * 100;
 		  		//alert(nh);
 		  					//tv.height =  nh;
-		  					content.height =   (jresult.length * 55);
-		  					content.visible=true;
+		  					//content.height =   (jresult.length * 55);
+		  					//content.visible=true;
 							
-							indicatorView.hide();
+						//	indicatorView.hide();
 							
 						}catch(err)
 						{
-							//alert(err);
+							alert(err);
 							Titanium.API.error(err);
 						    Titanium.UI.createAlertDialog({
 						        message : err,
@@ -443,12 +411,14 @@ function jsonCategoriesRows(controlname){
 			}); 
 				 
 			//loader.setTimeout(15000);   
-			loader.open("GET","http://coalicionlazo.qipro.org/apps/webservices/ws/wscategory.php?controlname=" + controlname,false);
+	
+			loader.open("GET","http://coalicionlazo.qipro.org/apps/webservices/ws/wscategory.php?controlname=" + controlname,true);
+					loader.setTimeout(99000);	
 			loader.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			loader.send();
 
 		
-	}
+	
 	
 	
 		  	
